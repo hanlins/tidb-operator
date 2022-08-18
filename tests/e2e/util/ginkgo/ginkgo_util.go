@@ -16,8 +16,8 @@ package ginkgo
 import (
 	"regexp"
 
-	"github.com/onsi/ginkgo"
 	ginkgoconfig "github.com/onsi/ginkgo/config"
+	ginkgo "github.com/onsi/ginkgo/v2"
 )
 
 // ItWhenFocus run It only when It is focused

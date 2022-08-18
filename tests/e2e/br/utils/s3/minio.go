@@ -20,7 +20,7 @@ import (
 	"time"
 
 	"github.com/minio/minio-go/v6"
-	"github.com/onsi/ginkgo"
+	ginkgo "github.com/onsi/ginkgo/v2"
 	"github.com/pingcap/tidb-operator/pkg/apis/pingcap/v1alpha1"
 	"github.com/pingcap/tidb-operator/tests/e2e/br/utils/portforward"
 	corev1 "k8s.io/api/core/v1"

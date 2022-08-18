@@ -37,7 +37,7 @@ import (
 	utiltngm "github.com/pingcap/tidb-operator/tests/e2e/util/tngm"
 	"github.com/pingcap/tidb-operator/tests/pkg/fixture"
 
-	"github.com/onsi/ginkgo"
+	ginkgo "github.com/onsi/ginkgo/v2"
 	"github.com/onsi/gomega"
 	apiextensionsclientset "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"

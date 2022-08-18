@@ -21,7 +21,7 @@ import (
 	"reflect"
 	"time"
 
-	"github.com/onsi/ginkgo"
+	ginkgo "github.com/onsi/ginkgo/v2"
 	astsHelper "github.com/pingcap/advanced-statefulset/client/apis/apps/v1/helper"
 	asclientset "github.com/pingcap/advanced-statefulset/client/client/clientset/versioned"
 	utiltc "github.com/pingcap/tidb-operator/tests/e2e/util/tidbcluster"
