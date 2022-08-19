@@ -15,8 +15,8 @@ package ginkgo
 
 import (
 	"regexp"
+	"strings"
 
-	ginkgoconfig "github.com/onsi/ginkgo/config"
 	ginkgo "github.com/onsi/ginkgo/v2"
 )
 
@@ -24,7 +24,8 @@ import (
 func ItWhenFocus(text string, body interface{}, timeout ...float64) bool {
 	skip := true
 
-	focusString := ginkgoconfig.GinkgoConfig.FocusString
+	ginkgoconfig, _ := ginkgo.GinkgoConfiguration()
+	focusString := strings.Join(ginkgoconfig.FocusStrings, "|")
 	filter := regexp.MustCompile(focusString)
 
 	if focusString != "" && filter.MatchString(text) {
@@ -41,7 +42,8 @@ func ItWhenFocus(text string, body interface{}, timeout ...float64) bool {
 func ContextWhenFocus(text string, body func()) bool {
 	skip := true
 
-	focusString := ginkgoconfig.GinkgoConfig.FocusString
+	ginkgoconfig, _ := ginkgo.GinkgoConfiguration()
+	focusString := strings.Join(ginkgoconfig.FocusStrings, "|")
 	filter := regexp.MustCompile(focusString)
 
 	if focusString != "" && filter.MatchString(text) {

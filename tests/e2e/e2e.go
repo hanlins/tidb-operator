@@ -23,12 +23,12 @@ import (
 	"os/exec"
 	"path"
 	"path/filepath"
+	"strings"
 	"testing"
 	"time"
 
-	"github.com/onsi/ginkgo/config"
-	"github.com/onsi/ginkgo/reporters"
 	ginkgo "github.com/onsi/ginkgo/v2"
+	"github.com/onsi/ginkgo/v2/reporters"
 	"github.com/onsi/gomega"
 	asclientset "github.com/pingcap/advanced-statefulset/client/client/clientset/versioned"
 	"github.com/pingcap/tidb-operator/pkg/client/clientset/versioned"
@@ -469,8 +469,11 @@ func RunE2ETests(t *testing.T) {
 	gomega.RegisterFailHandler(ginkgo.Fail)
 
 	// Disable serial and stability tests by default unless they are explicitly requested.
-	if config.GinkgoConfig.FocusString == "" && config.GinkgoConfig.SkipString == "" {
-		config.GinkgoConfig.SkipString = `\[Stability\]|\[Serial\]`
+	ginkgoconfig, _ := ginkgo.GinkgoConfiguration()
+	focusString := strings.Join(ginkgoconfig.FocusStrings, "|")
+	skipString := strings.Join(ginkgoconfig.SkipStrings, "|")
+	if focusString == "" && skipString == "" {
+		skipString = `\[Stability\]|\[Serial\]`
 	}
 
 	// Run tests through the Ginkgo runner with output to console + JUnit for Jenkins
@@ -481,10 +484,10 @@ func RunE2ETests(t *testing.T) {
 		if err := os.MkdirAll(framework.TestContext.ReportDir, 0755); err != nil {
 			log.Logf("ERROR: Failed creating report directory: %v", err)
 		} else {
-			r = append(r, reporters.NewJUnitReporter(path.Join(framework.TestContext.ReportDir, fmt.Sprintf("junit_%v%02d.xml", framework.TestContext.ReportPrefix, config.GinkgoConfig.ParallelNode))))
+			r = append(r, reporters.NewJUnitReporter(path.Join(framework.TestContext.ReportDir, fmt.Sprintf("junit_%v%02d.xml", framework.TestContext.ReportPrefix, ginkgo.GinkgoParallelProcess()))))
 		}
 	}
-	log.Logf("Starting e2e run %q on Ginkgo node %d", framework.RunID, config.GinkgoConfig.ParallelNode)
+	log.Logf("Starting e2e run %q on Ginkgo node %d", framework.RunID, ginkgo.GinkgoParallelProcess())
 
 	ginkgo.RunSpecsWithDefaultAndCustomReporters(t, "tidb-operator e2e suite", r)
 }
