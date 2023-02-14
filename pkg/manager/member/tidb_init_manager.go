@@ -397,6 +397,7 @@ func (m *tidbInitManager) makeTiDBInitJob(ti *v1alpha1.TidbInitializer) (*batchv
 		podSpec.Spec.Containers[0].Resources = *ti.Spec.Resources
 		podSpec.Spec.InitContainers[0].Resources = *ti.Spec.Resources
 	}
+	// TODO: add host network
 
 	job := &batchv1.Job{
 		ObjectMeta: meta,
