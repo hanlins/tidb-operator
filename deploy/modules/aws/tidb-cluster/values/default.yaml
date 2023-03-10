@@ -4,7 +4,7 @@ timezone: UTC
 pd:
   storageClassName: ebs-gp2
 tikv:
-  stroageClassName: local-storage
+  storageClassName: local-storage
   syncLog: true
 tidb:
   annotations:
